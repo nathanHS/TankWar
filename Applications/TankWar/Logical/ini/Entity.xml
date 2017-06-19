@@ -1,0 +1,100 @@
+<Tank.ini>
+    <Map length="52" width="104"/>
+    <GameObj die="0">
+        <!--concept：在矩阵中的层，每层是一个二维矩阵，继承关系-->
+        <!--地形：平地-->
+        <Terrain length="1" width="1" id="1" concept="1">
+            <!--兵地-->
+            <IceFace length="2" width="2" id="2" ice_effect_speed="0.3" ice_effect="1"/>
+            <!--水地-->
+            <WaterFace length="2" width="2" id="3" movable="0"/>
+        </Terrain>
+        <!--掩体-->
+        <Mask concept="2">
+            <!--草地-->
+            <Grass length="4" width="4" id="201" fire_al="0"/>
+        </Mask>
+        <!--可碰撞体：-->
+        <Block concept="3" side="0" is_no_enemy="0" hp="1">
+            <!--子弹（普通）：因为无法表示“网格中缝隙”的概念，所以子弹横向发射时候length=2，纵向发射时width=2，才能像中缝一样碰撞到两个紧挨着的砖块（每个2*2）-->
+            <Bullet concept="5" length="1" width="1" hp="1" speed="3" attack="1" id="401" distance_life="40" super_shoot_interval="1000">
+                <!--燃烧弹：燃烧间隔（毫秒），燃烧次数，普通攻击力，燃烧攻击力，数量，范围（纵向发射的子弹，正中间的2个位置就是子弹本体）-->
+                <FireBullet id="403" fire_interval="300" times="3" attack="1"  number="30" r="2"/>
+                <!--地雷：爆炸伤害，减速值，范围，减速作用时间-->
+                <MineBullet id="404" attack="1" number="15" r="5" speed_slow="1"
+                            speed_slow_time="3000" length="1" width="1"/>
+                <!--穿甲弹：血，（效果为，砖块全部被击破碰到钢块就死 或者 打破一个钢块）-->
+                <ThroughBullet id="406" hp="10000" number="15"/>
+                <!--爆炸弹：爆炸边长（4的倍数） >= 8，边缘爆炸伤害，核心爆炸伤害 -->
+                <BoomBullet id="407" attack="1" number="2000" r="2" R="3" boom_edge_attack="1" boom_center_attack="2"/>
+                <QuickBullet id="408" attack="1" number="125" super_shoot_interval="300"/>
+                <PayFollowBullet id="409" attack="1" number="1250" super_shoot_interval="300" />
+                <PayMine id="410" number="1250" set_mine_number="5"/>
+            </Bullet>
+            <!--坦克：护甲，护甲上限，普通射击间隔限制，特殊子弹射击间隔限制-->
+            <Tank length="4" width="4" armor="0" armor_top_limit="4" normal_shoot_interval="1000"
+                  super_shoot_interval="1000" can_move="1" can_shoot="1">
+                <PcTank id="106" side="1" face_to="2">
+                    <HeavyTank id="101" hp="3" speed="1"/>
+                    <HeavyQuickTank id="102" hp="3" speed="2"/>
+                    <LightTank id="103" hp="1" speed="2"/>
+                    <LightQuickTank id="104" hp="1" speed="3"/>
+                </PcTank>
+                <PlayerTank id="105" hp="3" speed="2" face_to="1" side="2">
+                    <PlayerTank1 id="107" x_pos="44" y_pos="0"/>
+
+                    <PlayerTank2 id="108" x_pos="56" y_pos="0"/>
+                </PlayerTank>
+            </Tank>
+            <Brick length="2" width="2" id="51" hp="1"/>
+            <IronBrick length="2" width="2" id="52" hp="10000"/>
+            <HeavyBrick length="2" width="2" id="53" hp="3"/>
+            <HomeStone length="4" width="4" hp="3" id="13"/>
+        </Block>
+        <!--显示在地图上的道具图标：显示时间-->
+        <Item length="2" width="2" concept="4" show_in_map_time="200000">
+
+            <ShootIntervalDownBuffItem id="302"/>
+            <MoveUpBuffItem id="303"/>
+            <BloodUpBuffItem id="304"/>
+            <IceNoEffectBuffItem id="305"/>
+            <HeartBuffItem id="306"/>
+
+            <NormalArmorBuffItem id="308"/>
+            <SheepBuffItem id="309"/>
+            <MoonToothBuffItem id="310"/>
+            <NoEnemyBuffItem id="311"/>
+            <PowerMaskBuffItem id="312"/>
+            <BulletCaseBuffItem id="313"/>
+            <FireBulletItem id="314"/>
+            <MineBulletItem id="315"/>
+            <ThroughBulletItem id="317"/>
+            <BoomBulletItem id="318"/>
+            <SpiderNetBuffItem id="319"/>
+            <QuickBulletItem id="320" />
+            <KillAllBuffItem id="321"/>
+            <BuildHeartStoneWallBuffItem id="322"/>
+        </Item>
+        <!--Buff 月牙，船，雪地鞋可以挡一命被击落后效果消失。  其余的不能挡命，可以叠加，除非掉血附加属性不清零。 都有概率在掉血或挡命后掉落成为Item道具。-->
+        <Buff length="2" width="2" buff_type="3" concept="6">
+            <NoEnemyBuff id="511" continue_time="5000" buff_type="1"/>
+            <SpiderNetBuff id="519" continue_time="5000" buff_type="1"/>
+
+            <SheepBuff id="509" buff_type="3"/>
+            <MoonToothBuff id="510" buff_type="3"/>
+            <IceNoEffectBuff id="505" buff_type="3"/>
+            <PowerMaskBuff id="512" shield_up="1" recovery_time="5" buff_type="3"/>
+
+
+            <MoveUpBuff id="503" move_up="1" buff_type="4"/>
+            <ShootIntervalDownBuff id="502" shoot_interval_time_down="250" buff_type="4"/>
+            <BloodUpBuff id="504" blood_up="1" buff_type="4"/>
+            <HeartBuff id="506" shoot_interval_time_down="1" move_up="1" blood_up="1" shield_up="1"  buff_type="4"/>
+            <NormalArmorBuff id="508" shield_up="1" buff_type="4"/>
+            <KillAllBuff id="521" buff_type="4"/>
+            <BulletCaseBuff id="522" buff_type="4"/>
+            <BuildHeartStoneWallBuff id="523" lasting_time="10" />
+            <!--无敌，更特殊一些，可以在任何Buff上叠加，先破无敌，再破可以挡命的Buff，再破护甲，再掉血，掉血时回到出生点并无敌5秒-->
+        </Buff>
+    </GameObj>
+</Tank.ini>

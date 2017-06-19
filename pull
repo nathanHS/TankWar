@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /home/cai/gitHere/gittest/ && git pull && cd Tank && php start.php start
+

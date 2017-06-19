@@ -1,0 +1,4 @@
+<Tank.ini>
+   <MarketItem id="1" class="PayMine" num="5000" time="30" price="100"/>
+   <MarketItem id="2" class="PayFollowBullet" num="5000" time="30" price="100"/>
+</Tank.ini>
